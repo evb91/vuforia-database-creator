@@ -4,15 +4,15 @@ import os
 import uuid
 import time
 
-def create_database():
+def create_database(vuforia_username, vuforia_password):
 
     driver = webdriver.Safari()
     driver.implicitly_wait(10)
     driver.get("https://developer.vuforia.com/vui/auth/login")
     elem = driver.find_element_by_id("login_email")
-    elem.send_keys(os.environ['VUFORIA_EMAIL_ADDRESS'])
+    elem.send_keys(vuforia_username)
     elem = driver.find_element_by_id("login_password")
-    elem.send_keys(os.environ['VUFORIA_PASSWORD'])
+    elem.send_keys(vuforia_password)
     elem.send_keys(Keys.RETURN)
     elem = driver.find_element_by_id("get-development-key")
     elem.click()
@@ -56,4 +56,5 @@ def create_database():
     server_secret_key = elem.text
     driver.close()
 
-create_database()
+create_database(vuforia_username=os.environ['VUFORIA_EMAIL_ADDRESS'],
+vuforia_password=os.environ['VUFORIA_PASSWORD'])
